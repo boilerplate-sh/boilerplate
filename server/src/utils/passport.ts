@@ -29,6 +29,7 @@ passport.use(
       }
 
       const validatePassword = await bcrypt.compare(password, user.password);
+
       if (!validatePassword) {
         return done(null, false, {
           message: "Incorrect information provided.",
