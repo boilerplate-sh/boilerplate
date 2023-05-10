@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../../utils/prismaClient";
-import { Prisma } from "@prisma/client";
 import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
 import { assert, object, string, size, refine } from "superstruct";
