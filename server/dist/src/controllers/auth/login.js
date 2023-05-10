@@ -41,37 +41,43 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var prismaClient_1 = require("../../utils/prismaClient");
 var bcrypt_1 = __importDefault(require("bcrypt"));
+var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 var superstruct_1 = require("superstruct");
 var isemail_1 = __importDefault(require("isemail"));
-var Signup = (0, superstruct_1.object)({
+var Login = (0, superstruct_1.object)({
     // string and a valid email address
     email: (0, superstruct_1.refine)((0, superstruct_1.string)(), "email", function (v) { return isemail_1.default.validate(v); }),
     // password is between 6 and 30 characters long
     password: (0, superstruct_1.size)((0, superstruct_1.string)(), 6, 30),
-    // name is between 2 and 100 characters long
-    name: (0, superstruct_1.size)((0, superstruct_1.string)(), 2, 100),
 });
-var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, name_1, hashedPassword, user, error_1;
+var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var _a, email, password, user, validPassword, token, error_1;
     return __generator(this, function (_b) {
         switch (_b.label) {
             case 0:
                 _b.trys.push([0, 3, , 4]);
-                (0, superstruct_1.assert)(req.body, Signup);
-                _a = req.body, email = _a.email, password = _a.password, name_1 = _a.name;
-                return [4 /*yield*/, bcrypt_1.default.hash(password, 6)];
-            case 1:
-                hashedPassword = _b.sent();
-                return [4 /*yield*/, prismaClient_1.prismaClient.user.create({
-                        data: { email: email, password: hashedPassword, name: name_1 },
+                (0, superstruct_1.assert)(req.body, Login);
+                _a = req.body, email = _a.email, password = _a.password;
+                return [4 /*yield*/, prismaClient_1.prismaClient.user.findUnique({
+                        where: { email: email },
                     })];
-            case 2:
+            case 1:
                 user = _b.sent();
-                // deleted user password from being sent in the response
-                delete user["password"];
-                return [2 /*return*/, res.status(201).json({
+                if (!user) {
+                    return [2 /*return*/, res.status(400).json({ message: "Incorrect email or password." })];
+                }
+                return [4 /*yield*/, bcrypt_1.default.compare(password, user.password)];
+            case 2:
+                validPassword = _b.sent();
+                if (!validPassword) {
+                    return [2 /*return*/, res.status(400).json({ message: "Incorrect email or password." })];
+                }
+                token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, {
+                    expiresIn: "1d",
+                });
+                return [2 /*return*/, res.status(200).json({
                         message: "Success",
-                        user: user,
+                        token: token,
                     })];
             case 3:
                 error_1 = _b.sent();
@@ -82,4 +88,4 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
         }
     });
 }); };
-exports.default = register;
+exports.default = login;

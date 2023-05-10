@@ -16,8 +16,8 @@ const Signup = object({
 
 const register = async (req: Request, res: Response) => {
   try {
-    const { email, password, name } = req.body;
     assert(req.body, Signup);
+    const { email, password, name } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 6);
 
