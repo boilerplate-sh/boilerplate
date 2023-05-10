@@ -15,11 +15,6 @@ const Signup = object({
   name: size(string(), 2, 100),
 });
 
-type Signup = Omit<
-  Prisma.UserCreateArgs["data"],
-  "id" | "createdAt" | "updatedAt"
->;
-
 const register = async (req: Request, res: Response) => {
   try {
     const { email, password, name } = req.body;
