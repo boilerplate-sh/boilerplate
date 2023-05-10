@@ -2,19 +2,9 @@ import { Request, Response } from "express";
 import { prismaClient } from "../../utils/prismaClient";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { assert, object, string, size, refine } from "superstruct";
-import isEmail from "isemail";
-
-const Login = object({
-  // string and a valid email address
-  email: refine(string(), "email", (v) => isEmail.validate(v)),
-  // password is between 6 and 30 characters long
-  password: size(string(), 6, 30),
-});
 
 const login = async (req: Request, res: Response) => {
   try {
-    assert(req.body, Login);
     const { email, password } = req.body;
 
     const user = await prismaClient.user.findUnique({
