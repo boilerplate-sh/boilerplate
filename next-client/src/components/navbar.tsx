@@ -2,13 +2,24 @@
 
 import { useState } from "react";
 import { cn } from "@/lib/utils";
-import { Button } from "./ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
 
 const Actions = ({ className }: { className?: string | undefined }) => {
   return (
     <div className={cn("relative flex gap-3", className)}>
-      <Button className="w-full">Login</Button>
-      <Button className="w-full ">Signup</Button>
+      <Link
+        href={`javascript:void(0)`}
+        className={buttonVariants({ variant: "outline" })}
+      >
+        Login
+      </Link>
+      <Link
+        href={`javascript:void(0)`}
+        className={buttonVariants({ variant: "outline" })}
+      >
+        Signup
+      </Link>
     </div>
   );
 };
