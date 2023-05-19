@@ -53,7 +53,7 @@ export default function page() {
 
             <p className="flex justify-end">
               <Link className="w-fit border-b border-black text-sm" href={`/`}>
-                Reset passport?
+                Reset password?
               </Link>
             </p>
           </div>
