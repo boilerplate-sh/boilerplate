@@ -8,14 +8,11 @@ import Link from "next/link";
 const Actions = ({ className }: { className?: string | undefined }) => {
   return (
     <div className={cn("relative flex gap-3", className)}>
-      <Link
-        href={`javascript:void(0)`}
-        className={buttonVariants({ variant: "outline" })}
-      >
+      <Link href={"/login"} className={buttonVariants({ variant: "outline" })}>
         Login
       </Link>
       <Link
-        href={`javascript:void(0)`}
+        href={"javascript:void(0)"}
         className={buttonVariants({ variant: "outline" })}
       >
         Signup
@@ -42,7 +39,7 @@ export const Navbar = () => {
       )}
     >
       <div className="flex-none lg:flex-initial ">
-        <a href="javascript:void(0)">
+        <a href="/">
           <h3 className="font-bold">Boilerplate</h3>
         </a>
       </div>
