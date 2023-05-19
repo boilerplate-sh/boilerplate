@@ -42,7 +42,7 @@ export const Navbar = () => {
             <h3 className="font-bold">Boilerplate</h3>
           </a>
         </div>
-        <div className="flex flex-1  items-center justify-between">
+        <div className="flex flex-1 items-center justify-between">
           <div
             className={cn(
               "bg-white absolute z-20 w-full top-12 left-0 py-3 px-4 border-b md:px-8 lg:static lg:block lg:border-none",
