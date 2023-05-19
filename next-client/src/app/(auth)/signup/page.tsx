@@ -19,20 +19,22 @@ export default function page() {
           <path
             stroke-linecap="round"
             stroke-linejoin="round"
-            d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
+            d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z"
           />
         </svg>
       </div>
 
       <div className="flex flex-col justify-center items-center gap-2 py-5">
-        <h3 className=" font-semibold">Welcome back</h3>
+        <h3 className=" font-semibold">Sign up</h3>
         <span className="text-base text-gray-400">
-          Please enter your details to login!
+          Please fill out the form to create an account!
         </span>
       </div>
 
       <div className="flex flex-col gap-6 w-full md:w-4/12">
         <form className="flex flex-col gap-6">
+          <Input type="text" autoCorrect="off" placeholder="Full name" />
+
           <Input
             type="email"
             autoComplete="email"
@@ -40,29 +42,13 @@ export default function page() {
             placeholder="Email"
           />
           <Input type="password" autoCorrect="off" placeholder="Password" />
-          <div className="flex justify-between">
-            <div className="flex items-center space-x-2">
-              <Checkbox id="terms" />
-              <label
-                htmlFor="terms"
-                className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-              >
-                Remember me
-              </label>
-            </div>
 
-            <p className="flex justify-end">
-              <Link className="w-fit border-b border-black text-sm" href={`/`}>
-                Reset password?
-              </Link>
-            </p>
-          </div>
-          <Button>Login</Button>
+          <Button>Sign up</Button>
         </form>
         <div>
-          <span className="text-sm text-gray-400">Don't have an account? </span>
-          <Link className="text-sm" href={`/signup`}>
-            Sign up
+          <span className="text-sm text-gray-400">Have an account? </span>
+          <Link className="text-sm" href={`/login`}>
+            Login
           </Link>
         </div>
       </div>

@@ -11,10 +11,7 @@ const Actions = ({ className }: { className?: string | undefined }) => {
       <Link href={"/login"} className={buttonVariants({ variant: "outline" })}>
         Login
       </Link>
-      <Link
-        href={"javascript:void(0)"}
-        className={buttonVariants({ variant: "outline" })}
-      >
+      <Link href={"/signup"} className={buttonVariants({ variant: "outline" })}>
         Signup
       </Link>
     </div>
