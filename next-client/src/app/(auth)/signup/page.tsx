@@ -1,9 +1,13 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import React from "react";
 
 export default function page() {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  };
   return (
     <div className="h-[calc(100vh-60px)] w-full flex flex-col items-center justify-center">
       <div className="border p-2 rounded-full shadow-md">
@@ -31,7 +35,7 @@ export default function page() {
       </div>
 
       <div className="flex flex-col gap-6 w-full md:w-4/12">
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={onSubmit}>
           <Input type="text" autoCorrect="off" placeholder="Full name" />
 
           <Input

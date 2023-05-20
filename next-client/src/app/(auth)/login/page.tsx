@@ -1,10 +1,28 @@
+"use client";
+import { useLogin } from "@/api/mutateData/auth/useLogin";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function page() {
+  const { mutate: loginUser } = useLogin();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    loginUser(formData);
+  };
+
   return (
     <div className="h-[calc(100vh-60px)] w-full flex flex-col items-center justify-center">
       <div className="border p-2 rounded-full shadow-md">
@@ -32,14 +50,26 @@ export default function page() {
       </div>
 
       <div className="flex flex-col gap-6 w-full md:w-4/12">
-        <form className="flex flex-col gap-6">
+        <form className="flex flex-col gap-6" onSubmit={onSubmit}>
           <Input
             type="email"
+            name="email"
             autoComplete="email"
             autoCorrect="off"
             placeholder="Email"
+            required
+            value={formData.email}
+            onChange={handleFormData}
           />
-          <Input type="password" autoCorrect="off" placeholder="Password" />
+          <Input
+            type="password"
+            name="password"
+            autoCorrect="off"
+            placeholder="Password"
+            required
+            value={formData.password}
+            onChange={handleFormData}
+          />
           <div className="flex justify-between">
             <div className="flex items-center space-x-2">
               <Checkbox id="terms" />
@@ -57,7 +87,7 @@ export default function page() {
               </Link>
             </p>
           </div>
-          <Button>Login</Button>
+          <Button type="submit">Login</Button>
         </form>
         <div>
           <span className="text-sm text-gray-400">Don't have an account? </span>

@@ -35,50 +35,38 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var prismaClient_1 = require("../../services/prismaClient");
-var bcrypt_1 = __importDefault(require("bcrypt"));
-var jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
-var login = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, user, validPassword, token, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
-            case 0:
-                _a = req.body, email = _a.email, password = _a.password;
-                _b.label = 1;
-            case 1:
-                _b.trys.push([1, 4, , 5]);
-                return [4 /*yield*/, prismaClient_1.prismaClient.user.findUnique({
-                        where: { email: email },
+exports.setUpPassport = void 0;
+var prismaClient_1 = require("./prismaClient");
+var passport_jwt_1 = require("passport-jwt");
+var setUpPassport = function (passport) {
+    var opts = {
+        jwtFromRequest: passport_jwt_1.ExtractJwt.fromAuthHeaderAsBearerToken(),
+        secretOrKey: process.env.JWT_SECRET,
+    };
+    passport.use(new passport_jwt_1.Strategy(opts, function (jwtPayload, done) { return __awaiter(void 0, void 0, void 0, function () {
+        var user;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0: return [4 /*yield*/, prismaClient_1.prismaClient.user.findUnique({
+                        where: { id: jwtPayload.id },
                     })];
-            case 2:
-                user = _b.sent();
-                if (!user) {
-                    return [2 /*return*/, res.status(400).json({ message: "Incorrect email or password." })];
-                }
-                return [4 /*yield*/, bcrypt_1.default.compare(password, user.password)];
-            case 3:
-                validPassword = _b.sent();
-                if (!validPassword) {
-                    return [2 /*return*/, res.status(400).json({ message: "Incorrect email or password." })];
-                }
-                token = jsonwebtoken_1.default.sign({ id: user.id }, process.env.JWT_SECRET, {
-                    expiresIn: "1d",
-                });
-                return [2 /*return*/, res.status(200).json({
-                        message: "Success",
-                        token: token,
-                    })];
-            case 4:
-                error_1 = _b.sent();
-                return [2 /*return*/, res.status(400).json({
-                        message: error_1.message,
-                    })];
-            case 5: return [2 /*return*/];
-        }
-    });
-}); };
-exports.default = login;
+                case 1:
+                    user = _a.sent();
+                    if (!user) {
+                        return [2 /*return*/, done(null, false, {
+                                message: "Incorrect information provided.",
+                            })];
+                    }
+                    if (user) {
+                        return [2 /*return*/, done(null, user)];
+                    }
+                    else {
+                        return [2 /*return*/, done(null, false)];
+                    }
+                    return [2 /*return*/];
+            }
+        });
+    }); }));
+};
+exports.setUpPassport = setUpPassport;

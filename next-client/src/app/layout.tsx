@@ -1,4 +1,6 @@
 import { Navbar } from "@/components/navbar";
+import { Toaster } from "@/components/ui/toaster";
+import QueryProvider from "@/context/QueryProvider";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
 
@@ -17,12 +19,15 @@ export default function RootLayout({ children }: RootLayout) {
   return (
     <html lang="en">
       <body className={inter.className}>
-        <header>
-          <Navbar />
-        </header>
-        <main className="container h-[calc(100vh-60px)] bg-background">
-          {children}
-        </main>
+        <QueryProvider>
+          <header>
+            <Navbar />
+          </header>
+          <main className="container h-[calc(100vh-60px)] bg-background">
+            {children}
+          </main>
+        </QueryProvider>
+        <Toaster />
       </body>
     </html>
   );

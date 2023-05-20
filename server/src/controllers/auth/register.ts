@@ -15,10 +15,17 @@ const Signup = object({
 });
 
 const register = async (req: Request, res: Response) => {
+  let body;
   try {
     assert(req.body, Signup);
-    const { email, password, name } = req.body;
+    body = req.body;
+  } catch (error) {
+    return res.status(400).json({ message: "Please double check your info." });
+  }
 
+  const { email, password, name } = body;
+
+  try {
     const hashedPassword = await bcrypt.hash(password, 6);
 
     const user: Partial<User> = await prismaClient.user.create({

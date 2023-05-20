@@ -4,9 +4,8 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
   try {
-    const { email, password } = req.body;
-
     const user = await prismaClient.user.findUnique({
       where: { email },
     });

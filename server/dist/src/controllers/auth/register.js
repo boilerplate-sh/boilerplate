@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var prismaClient_1 = require("../../utils/prismaClient");
+var prismaClient_1 = require("../../services/prismaClient");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var superstruct_1 = require("superstruct");
 var isemail_1 = __importDefault(require("isemail"));
@@ -52,33 +52,41 @@ var Signup = (0, superstruct_1.object)({
     name: (0, superstruct_1.size)((0, superstruct_1.string)(), 2, 100),
 });
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var _a, email, password, name_1, hashedPassword, user, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+    var body, email, password, name, hashedPassword, user, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
-                _b.trys.push([0, 3, , 4]);
-                (0, superstruct_1.assert)(req.body, Signup);
-                _a = req.body, email = _a.email, password = _a.password, name_1 = _a.name;
-                return [4 /*yield*/, bcrypt_1.default.hash(password, 6)];
+                try {
+                    (0, superstruct_1.assert)(req.body, Signup);
+                    body = req.body;
+                }
+                catch (error) {
+                    return [2 /*return*/, res.status(400).json({ message: "Please double check your info." })];
+                }
+                email = body.email, password = body.password, name = body.name;
+                _a.label = 1;
             case 1:
-                hashedPassword = _b.sent();
-                return [4 /*yield*/, prismaClient_1.prismaClient.user.create({
-                        data: { email: email, password: hashedPassword, name: name_1 },
-                    })];
+                _a.trys.push([1, 4, , 5]);
+                return [4 /*yield*/, bcrypt_1.default.hash(password, 6)];
             case 2:
-                user = _b.sent();
+                hashedPassword = _a.sent();
+                return [4 /*yield*/, prismaClient_1.prismaClient.user.create({
+                        data: { email: email, password: hashedPassword, name: name },
+                    })];
+            case 3:
+                user = _a.sent();
                 // deleted user password from being sent in the response
                 delete user["password"];
                 return [2 /*return*/, res.status(201).json({
                         message: "Success",
                         user: user,
                     })];
-            case 3:
-                error_1 = _b.sent();
+            case 4:
+                error_1 = _a.sent();
                 return [2 /*return*/, res.status(400).json({
                         message: error_1.message,
                     })];
-            case 4: return [2 /*return*/];
+            case 5: return [2 /*return*/];
         }
     });
 }); };
