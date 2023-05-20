@@ -1,13 +1,29 @@
 "use client";
+import { useRegister } from "@/api/mutateData/auth/useRegister";
+import { PasswordValidation } from "@/components/passwordValidation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 export default function page() {
+  const { mutate: registerUser } = useRegister();
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    password: "",
+  });
+
+  const handleFormData = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    registerUser(formData);
   };
+
   return (
     <div className="h-[calc(100vh-60px)] w-full flex flex-col items-center justify-center">
       <div className="border p-2 rounded-full shadow-md">
@@ -34,19 +50,44 @@ export default function page() {
         </span>
       </div>
 
-      <div className="flex flex-col gap-6 w-full md:w-4/12">
+      <div className="flex flex-col gap-6 w-full md:w-8/12 lg:w-5/12">
         <form className="flex flex-col gap-6" onSubmit={onSubmit}>
-          <Input type="text" autoCorrect="off" placeholder="Full name" />
+          <Input
+            type="text"
+            name="name"
+            autoCorrect="off"
+            placeholder="Full name"
+            required
+            value={formData.name}
+            onChange={handleFormData}
+          />
 
           <Input
             type="email"
+            name="email"
             autoComplete="email"
             autoCorrect="off"
             placeholder="Email"
+            required
+            value={formData.email}
+            onChange={handleFormData}
           />
-          <Input type="password" autoCorrect="off" placeholder="Password" />
 
-          <Button>Sign up</Button>
+          <div className="flex flex-col space-y-3">
+            <Input
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+              value={formData.password}
+              onChange={handleFormData}
+              min={6}
+            />
+
+            <PasswordValidation password={formData.password} />
+          </div>
+
+          <Button type="submit">Sign up</Button>
         </form>
         <div>
           <span className="text-sm text-gray-400">Have an account? </span>

@@ -5,18 +5,21 @@ import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { redirect } from "next/navigation";
 
-const login = async (data: Record<string, any>) => {
+const register = async (data: Record<string, any>) => {
   try {
-    return await postData("/auth/login", data);
+    return await postData("/auth/register", data);
   } catch (error) {
     throw error;
   }
 };
 
-export const useLogin = () => {
-  return useMutation(login, {
+export const useRegister = () => {
+  return useMutation(register, {
     onSuccess: () => {
-      redirect("/");
+      toast({
+        description: "Success, being redirected...",
+      });
+      setTimeout(() => redirect("/login"), 500);
     },
     onError: (error: Error | AxiosError) => {
       if (axios.isAxiosError(error)) {

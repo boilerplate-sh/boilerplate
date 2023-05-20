@@ -43,11 +43,12 @@ var prismaClient_1 = require("../../services/prismaClient");
 var bcrypt_1 = __importDefault(require("bcrypt"));
 var superstruct_1 = require("superstruct");
 var isemail_1 = __importDefault(require("isemail"));
+var utils_1 = require("../../lib/utils");
 var Signup = (0, superstruct_1.object)({
     // string and a valid email address
     email: (0, superstruct_1.refine)((0, superstruct_1.string)(), "email", function (v) { return isemail_1.default.validate(v); }),
-    // password is between 6 and 30 characters long
-    password: (0, superstruct_1.size)((0, superstruct_1.string)(), 6, 30),
+    // password must be longer than 6 characters
+    password: (0, superstruct_1.refine)((0, superstruct_1.string)(), "password", function (v) { return (0, utils_1.strongPassword)(v); }),
     // name is between 2 and 100 characters long
     name: (0, superstruct_1.size)((0, superstruct_1.string)(), 2, 100),
 });

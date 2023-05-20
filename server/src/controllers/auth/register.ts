@@ -4,12 +4,13 @@ import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
 import { assert, object, string, size, refine } from "superstruct";
 import isEmail from "isemail";
+import { strongPassword } from "../../lib/utils";
 
 const Signup = object({
   // string and a valid email address
   email: refine(string(), "email", (v) => isEmail.validate(v)),
-  // password is between 6 and 30 characters long
-  password: size(string(), 6, 30),
+  // password must be longer than 6 characters
+  password: refine(string(), "password", (v) => strongPassword(v)),
   // name is between 2 and 100 characters long
   name: size(string(), 2, 100),
 });
