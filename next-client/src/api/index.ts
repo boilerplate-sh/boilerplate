@@ -13,3 +13,7 @@ if (typeof window !== "undefined") {
 export const postData = (route: string, data: Record<string, any>) => {
   return axios.post(route, data);
 };
+
+export const fetchData = (route: string) => {
+  return axios.get(route);
+};

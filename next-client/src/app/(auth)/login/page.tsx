@@ -3,11 +3,12 @@ import { useLogin } from "@/api/mutateData/auth/useLogin";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
+import { Loader2 } from "lucide-react";
 import Link from "next/link";
 import React, { useState } from "react";
 
 export default function page() {
-  const { mutate: loginUser } = useLogin();
+  const { mutate: loginUser, isLoading } = useLogin();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -30,13 +31,13 @@ export default function page() {
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
-          stroke-width="1.5"
+          strokeWidth="1.5"
           stroke="currentColor"
           className="w-12 h-12"
         >
           <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
+            strokeLinecap="round"
+            strokeLinejoin="round"
             d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"
           />
         </svg>
@@ -61,6 +62,7 @@ export default function page() {
             value={formData.email}
             onChange={handleFormData}
           />
+
           <Input
             type="password"
             name="password"
@@ -70,6 +72,7 @@ export default function page() {
             value={formData.password}
             onChange={handleFormData}
           />
+
           <div className="flex justify-between">
             <div className="flex items-center space-x-2">
               <Checkbox id="terms" />
@@ -87,7 +90,15 @@ export default function page() {
               </Link>
             </p>
           </div>
-          <Button type="submit">Login</Button>
+
+          {isLoading ? (
+            <Button disabled>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Please wait
+            </Button>
+          ) : (
+            <Button type="submit">Login</Button>
+          )}
         </form>
         <div>
           <span className="text-sm text-gray-400">Don't have an account? </span>

@@ -1,5 +1,6 @@
 import { Navbar } from "@/components/navbar";
 import { Toaster } from "@/components/ui/toaster";
+import { AuthContextProvider } from "@/context/AuthProvider";
 import QueryProvider from "@/context/QueryProvider";
 import "@/styles/globals.css";
 import { Inter } from "next/font/google";
@@ -20,12 +21,14 @@ export default function RootLayout({ children }: RootLayout) {
     <html lang="en">
       <body className={inter.className}>
         <QueryProvider>
-          <header>
-            <Navbar />
-          </header>
-          <main className="container h-[calc(100vh-60px)] bg-background">
-            {children}
-          </main>
+          <AuthContextProvider>
+            <header>
+              <Navbar />
+            </header>
+            <main className="container h-[calc(100vh-60px)] bg-background">
+              {children}
+            </main>
+          </AuthContextProvider>
         </QueryProvider>
         <Toaster />
       </body>

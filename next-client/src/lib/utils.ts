@@ -24,3 +24,5 @@ export const checkPassword = (password: string) => {
     isValid,
   };
 };
+
+export const isServer = typeof window === "undefined";

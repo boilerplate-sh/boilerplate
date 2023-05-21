@@ -53,7 +53,7 @@ var Signup = (0, superstruct_1.object)({
     name: (0, superstruct_1.size)((0, superstruct_1.string)(), 2, 100),
 });
 var register = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var body, email, password, name, hashedPassword, user, error_1;
+    var body, email, password, name, hashedPassword, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -75,12 +75,9 @@ var register = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                         data: { email: email, password: hashedPassword, name: name },
                     })];
             case 3:
-                user = _a.sent();
-                // deleted user password from being sent in the response
-                delete user["password"];
+                _a.sent();
                 return [2 /*return*/, res.status(201).json({
                         message: "Success",
-                        user: user,
                     })];
             case 4:
                 error_1 = _a.sent();

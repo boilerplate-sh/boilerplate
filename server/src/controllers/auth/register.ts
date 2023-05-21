@@ -29,16 +29,12 @@ const register = async (req: Request, res: Response) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 6);
 
-    const user: Partial<User> = await prismaClient.user.create({
+    await prismaClient.user.create({
       data: { email, password: hashedPassword, name },
     });
 
-    // deleted user password from being sent in the response
-    delete user["password"];
-
     return res.status(201).json({
       message: "Success",
-      user,
     });
   } catch (error: any) {
     return res.status(400).json({

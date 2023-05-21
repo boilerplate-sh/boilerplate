@@ -2,11 +2,12 @@ import { Request, Response } from "express";
 import { prismaClient } from "../../services/prismaClient";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { User } from "@prisma/client";
 
 const login = async (req: Request, res: Response) => {
   const { email, password } = req.body;
   try {
-    const user = await prismaClient.user.findUnique({
+    const user: Partial<User | null> = await prismaClient.user.findUnique({
       where: { email },
     });
 
@@ -14,7 +15,7 @@ const login = async (req: Request, res: Response) => {
       return res.status(400).json({ message: "Incorrect email or password." });
     }
 
-    const validPassword = await bcrypt.compare(password, user.password);
+    const validPassword = await bcrypt.compare(password, user.password!);
 
     if (!validPassword) {
       return res.status(400).json({ message: "Incorrect email or password." });
@@ -24,9 +25,12 @@ const login = async (req: Request, res: Response) => {
       expiresIn: "1d",
     });
 
+    delete user["password"];
+
     return res.status(200).json({
       message: "Success",
       token,
+      user,
     });
   } catch (error: any) {
     return res.status(400).json({
