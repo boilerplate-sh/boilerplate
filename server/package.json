@@ -16,6 +16,7 @@
     "@types/node": "^20.1.0",
     "@types/passport": "^1.0.12",
     "@types/passport-jwt": "^3.0.8",
+    "aws-sdk": "^2.1381.0",
     "bcrypt": "^5.1.0",
     "concurrently": "^8.0.1",
     "cors": "^2.8.5",
