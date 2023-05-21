@@ -4,6 +4,7 @@ import cors from "cors";
 import path from "path";
 import dotenv from "dotenv";
 import authRoutes from "./src/routes/auth/index";
+import mediaRoutes from "./src/routes/media/index";
 import { setUpPassport } from "./src/services/passport";
 dotenv.config();
 const app = express();
@@ -18,6 +19,7 @@ setUpPassport(passport);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 // Routes
-app.use("/auth", authRoutes);
+app.use("/api/v1//auth", authRoutes);
+app.use("/api/v1/media", mediaRoutes);
 
 app.listen(8000);

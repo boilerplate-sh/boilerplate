@@ -1,9 +1,9 @@
-import express from "express";
+import { Router } from "express";
 import register from "../../controllers/auth/register";
 import login from "../../controllers/auth/login";
 import passport from "passport";
 import findUser from "../../controllers/auth/findUser";
-const router = express.Router();
+const router = Router();
 
 router.get("/user", passport.authenticate("jwt", { session: false }), findUser);
 router.post("/register", register);

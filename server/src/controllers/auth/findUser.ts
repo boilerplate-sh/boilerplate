@@ -3,7 +3,6 @@ import { prismaClient } from "../../services/prismaClient";
 
 const findUser = async (req: Request, res: Response) => {
   const user = req.user;
-
   try {
     const foundUser = await prismaClient.user.findFirst({
       where: { id: user?.id },
