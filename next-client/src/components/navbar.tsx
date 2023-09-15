@@ -26,8 +26,8 @@ export const Navbar = () => {
   }, [pathname]);
 
   const navigation = [
-    { title: "About", path: "javascript:void(0)" },
-    { title: "Products", path: "javascript:void(0)" },
+    { title: "Upload Examples", path: "javascript:void(0)" },
+    { title: "Payment Example", path: "javascript:void(0)" },
     { title: "Contact us", path: "javascript:void(0)" },
     { title: "Careers", path: "javascript:void(0)" },
   ];
