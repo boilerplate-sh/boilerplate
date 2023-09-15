@@ -6,18 +6,16 @@ import { buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const Actions = ({ className }: { className?: string | undefined }) => {
-  return (
-    <div className={cn("relative flex gap-3", className)}>
-      <Link href={"/login"} className={buttonVariants({ variant: "outline" })}>
-        Login
-      </Link>
-      <Link href={"/signup"} className={buttonVariants({ variant: "outline" })}>
-        Signup
-      </Link>
-    </div>
-  );
-};
+const authLinks = (className: string) => (
+  <div className={cn("relative flex gap-3", className)}>
+    <Link href={"/login"} className={buttonVariants({ variant: "outline" })}>
+      Login
+    </Link>
+    <Link href={"/signup"} className={buttonVariants({ variant: "outline" })}>
+      Signup
+    </Link>
+  </div>
+);
 
 export const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
@@ -56,16 +54,15 @@ export const Navbar = () => {
           <ul className="space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
             {navigation.map((item, idx) => (
               <li key={idx} className="text-gray-600 hover:text-gray-900">
-                <a href={item.path}>{item.title}</a>
+                <Link href={item.path}>{item.title}</Link>
               </li>
             ))}
           </ul>
-          <Actions className={"mt-5 pt-5 flex-col lg:hidden"} />
+          {authLinks("mt-5 pt-5 flex-col lg:hidden")}
         </div>
 
         <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
-          <Actions className={"hidden lg:flex"} />
-
+          {authLinks("hidden lg:flex")}
           <button
             className="outline-none text-gray-400 block lg:hidden"
             onClick={() => setMenuState(!menuState)}
