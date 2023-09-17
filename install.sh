@@ -30,10 +30,10 @@ if command -v git &> /dev/null; then
     mv server ../
     cd ../
     rm -rf boilerplate
+    rm -rf .git
 else
     echo "Git is not installed."
 fi
-
 
 
 # Check if the 'server' directory exists
