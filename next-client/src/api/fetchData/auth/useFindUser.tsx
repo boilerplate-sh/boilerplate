@@ -10,7 +10,7 @@ interface UserResponse {
 }
 
 const findUser = async () => {
-  if (!localStorage.getItem("token")) return undefined;
+  if (!localStorage.getItem("token")) return null;
   return await fetchData("/auth/user");
 };
 

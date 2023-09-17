@@ -22,12 +22,6 @@ const AuthContext = createContext<AuthContextType>({
 
 const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<User | undefined>();
-  const [token, setToken] = useState<string | null>(null); // Add a token state.
-
-  useEffect(() => {
-    const localToken = localStorage.getItem("token");
-    setToken(localToken);
-  }, []);
 
   const { data } = useFindUser();
 
