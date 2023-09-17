@@ -34,12 +34,3 @@ if command -v git &> /dev/null; then
 else
     echo "Git is not installed."
 fi
-
-
-# Check if the 'server' directory exists
-if [ -d "server" ]; then
-  # Create the 'uploads' directory inside 'server'
-  mkdir -p server/uploads
-else
-  echo "The 'server' directory does not exist."
-fi
