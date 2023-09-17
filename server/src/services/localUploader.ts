@@ -1,8 +1,11 @@
 import multer from "multer";
 import crypto from "crypto";
+import path from "path";
+
+const uploadFilePath = path.resolve(__dirname, "../../../", "public/uploads");
 
 const storage = multer.diskStorage({
-  destination: "uploads/",
+  destination: uploadFilePath,
   filename: function (
     _req,
     file: Express.Multer.File,
@@ -14,4 +17,9 @@ const storage = multer.diskStorage({
   },
 });
 
-export const localUpload = multer({ storage: storage });
+export const localUpload = multer({
+  storage: storage,
+  limits: {
+    fileSize: 1024 * 1024 * 5, // 5MB file size limit
+  },
+});

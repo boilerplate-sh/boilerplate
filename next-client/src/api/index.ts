@@ -17,3 +17,9 @@ export const postData = (route: string, data: Record<string, any>) => {
 export const fetchData = (route: string) => {
   return axios.get(route);
 };
+
+export const uploadFile = (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return axios.post("/upload/", formData);
+};

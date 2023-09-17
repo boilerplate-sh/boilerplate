@@ -6,6 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var stripe_1 = __importDefault(require("stripe"));
 var stripe = new stripe_1.default(process.env.STRIPE_SECRET_KEY, {
     typescript: true,
-    apiVersion: "2022-11-15",
+    apiVersion: "2023-08-16",
 });
 exports.default = stripe;

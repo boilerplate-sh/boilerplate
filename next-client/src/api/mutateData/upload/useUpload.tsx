@@ -1,17 +1,18 @@
-import { postData } from "@/api";
+import { uploadFile } from "@/api";
 import { toast } from "@/components/ui/use-toast";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 
 const upload = async (file: File) => {
   try {
-    return postData("/media/upload", file);
+    console.log(file);
+    return uploadFile(file);
   } catch (error) {
     throw error;
   }
 };
 
-export const useUploadMedia = () => {
+export const useUpload = () => {
   return useMutation(upload, {
     onSuccess: () => {},
     onError: (error: Error | AxiosError) => {

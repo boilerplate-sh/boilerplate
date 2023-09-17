@@ -18,7 +18,6 @@ const login = async (data: Record<string, any>) => {
 export const useLogin = () => {
   const { setUser } = useContext(AuthContext);
   const router = useRouter();
-
   return useMutation(login, {
     onSuccess: (res) => {
       localStorage.setItem("token", res.data?.token);
@@ -28,7 +27,7 @@ export const useLogin = () => {
     onError: (error: Error | AxiosError) => {
       if (axios.isAxiosError(error)) {
         const errorMessage =
-          error.response?.data?.message || "An error occurred";
+          error.response?.data?.message ?? "An error occurred";
         toast({
           description: errorMessage,
           variant: "destructive",

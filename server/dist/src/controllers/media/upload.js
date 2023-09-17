@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 var Upload = function (req, res) {
+    console.log(req.file);
     try {
         if (!req.files || !(req.files instanceof Array)) {
             return res.status(400).json({ message: "No files were uploaded" });
