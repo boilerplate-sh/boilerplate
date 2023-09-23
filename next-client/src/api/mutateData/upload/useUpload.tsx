@@ -5,7 +5,6 @@ import axios, { AxiosError } from "axios";
 
 const upload = async (file: File) => {
   try {
-    console.log(file);
     return uploadFile(file);
   } catch (error) {
     throw error;
@@ -14,7 +13,6 @@ const upload = async (file: File) => {
 
 export const useUpload = () => {
   return useMutation(upload, {
-    onSuccess: () => {},
     onError: (error: Error | AxiosError) => {
       if (axios.isAxiosError(error)) {
         const errorMessage =
