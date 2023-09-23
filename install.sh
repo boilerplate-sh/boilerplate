@@ -24,7 +24,7 @@ cd ./$projectname
 
 # Clone the the Boilerplate repo
 if command -v git &> /dev/null; then
-    git clone https://github.com/elisvcodes/boilerplate.git
+    git clone https://github.com/boilerplate-sh/boilerplate.git
     cd ./boilerplate
     mv next-client ../
     mv server ../
