@@ -1,7 +1,6 @@
 import { Request, Response } from "express";
 import { prismaClient } from "../../services/prismaClient";
 import bcrypt from "bcrypt";
-import { User } from "@prisma/client";
 import { assert, object, string, size, refine } from "superstruct";
 import isEmail from "isemail";
 import { strongPassword } from "../../lib/utils";
