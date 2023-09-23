@@ -6,6 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = require("express");
 var localUploader_1 = require("../../services/localUploader");
 var upload_1 = __importDefault(require("../../controllers/upload/upload"));
+var remove_1 = __importDefault(require("../../controllers/upload/remove"));
 var router = (0, express_1.Router)();
 router.post("/", localUploader_1.localUpload.single("file"), upload_1.default);
+router.post("/remove", remove_1.default);
 exports.default = router;
