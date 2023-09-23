@@ -30,7 +30,17 @@ if command -v git &> /dev/null; then
     mv server ../
     cd ../
     rm -rf boilerplate
-    rm -rf .git
+    rm -rf .git    
 else
     echo "Git is not installed."
+fi
+
+
+# Check if the 'server' directory exists
+if [ -d "server" ]; then
+  # Create the 'uploads' directory inside 'server' and sure it
+  mkdir -p server/public/uploads
+  chmod -R a-x ./server/public/uploads/*
+else
+  echo "The 'server' directory does not exist."
 fi
