@@ -37,40 +37,32 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var prismaClient_1 = require("../../services/prismaClient");
-var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var user, _a, email, password, name, updatedUser, error_1;
-    return __generator(this, function (_b) {
-        switch (_b.label) {
+var deleteUser = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var user, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
             case 0:
                 user = req.user;
-                _a = req.body, email = _a.email, password = _a.password, name = _a.name;
-                _b.label = 1;
+                _a.label = 1;
             case 1:
-                _b.trys.push([1, 3, , 4]);
+                _a.trys.push([1, 3, , 4]);
                 if (!user) {
                     return [2 /*return*/, res.status(404).json({
                             message: "User not found",
                         })];
                 }
-                return [4 /*yield*/, prismaClient_1.prismaClient.user.update({
+                return [4 /*yield*/, prismaClient_1.prismaClient.user.delete({
                         where: {
                             id: user.id,
                         },
-                        data: {
-                            email: email,
-                            name: name,
-                            password: password,
-                        },
                     })];
             case 2:
-                updatedUser = _b.sent();
-                delete updatedUser["password"];
+                _a.sent();
                 return [2 /*return*/, res.status(200).json({
                         message: "Success",
-                        user: updatedUser,
                     })];
             case 3:
-                error_1 = _b.sent();
+                error_1 = _a.sent();
                 return [2 /*return*/, res.status(400).json({
                         message: error_1.message,
                     })];
@@ -78,4 +70,4 @@ var updateUser = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         }
     });
 }); };
-exports.default = updateUser;
+exports.default = deleteUser;
